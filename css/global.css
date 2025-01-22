@@ -1,0 +1,145 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  height: 67vh;
+  background-color: rgb(232, 241, 245);
+  border: 2px solid rgb(142, 142, 160);
+  padding: 120px;
+  margin: 30px;
+}
+
+.question-container {
+  display: block;
+  text-align: center;
+}
+
+.question {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.options {
+  margin-bottom: 20px;
+}
+
+.option {
+  background-color: #f1f1f1;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.option:hover {
+  background-color: #e0e0e0;
+}
+
+.selected {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.progress-container {
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  width: 100%;
+  background: #d3d2d2;
+  height: 30px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.progress {
+  width: 100%;
+  background: #d3d2d2;
+  height: 30px;
+  border-radius: 10px;
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.rocket {
+  position: absolute;
+  top: 100px;
+  left: 00px;
+  width: 20px;
+  height: 20px;
+  background-color: #007bff;
+  border-radius: 50%;
+}
+
+.question-numbers {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  width: 891, 8px;
+  gap: 60px;
+}
+
+.number {
+  margin: 0 5px;
+  padding: 5px;
+  background-color: #f1f1f1;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.number.active {
+  background-color: #62a1e4;
+  color: white;
+}
+
+.number.correct {
+  background-color: #28a745;
+  color: white;
+}
+
+.number.incorrect {
+  background-color: #dc3545;
+  color: white;
+}
+
+.result {
+  text-align: center;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.result p {
+  font-size: 18px;
+  font-weight: bold;
+}

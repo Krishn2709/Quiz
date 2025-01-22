@@ -4,26 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz</title>
-    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/global.css" />
+    <!-- <link rel="stylesheet" href="./css/index.css" /> -->
   </head>
   <body>
-    <div class="quiz-container">
+    <div class="container">
       <div class="progress-container">
-        <!-- <img src="./images/rocket.png" alt="Character" class="character" /> -->
+        <img src="./images/rocket.png" alt="Rocket" class="rocket" />
         <div class="progress-bar">
           <div class="progress"></div>
         </div>
         <div class="question-numbers"></div>
       </div>
 
-      <div class="quiz-section">
-        <div class="question-container">
-          <h2 id="question"></h2>
-          <div id="options"></div>
-        </div>
+      <div class="question-container">
+        <div class="question"></div>
+        <div class="options"></div>
+        <button class="btn" id="nextBtn">Next Question</button>
+      </div>
 
-        <button id="next-btn" class="btn">Next</button>
-        <button id="submit-btn" class="btn hidden">Submit</button>
+      <div class="result">
+        <h2>Quiz Results</h2>
+        <p>You got <span id="score">0</span> out of 10 questions correct!</p>
       </div>
     </div>
     <script src="./js/script.js"></script>
