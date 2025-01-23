@@ -1,6 +1,6 @@
 const questions = [
   { question: "What is 3 + 5?", options: ["7", "8", "9", "10"], correct: 1 },
-  { question: "What is 12 - 4?", options: ["6", "7", "8", "9"], correct: 0 },
+  { question: "What is 12 - 4?", options: ["6", "7", "8", "9"], correct: 2 },
   { question: "What is 6 x 7?", options: ["42", "40", "48", "45"], correct: 0 },
   { question: "What is 9 ÷ 3?", options: ["3", "4", "2", "5"], correct: 0 },
   {
@@ -21,22 +21,17 @@ let ans = new Array(questions.length).fill(null);
 
 const questionsElement = document.querySelector(".question");
 const optionsElement = document.querySelector(".options");
-const progressBar = document.querySelector(".progress-bar .progress");
+const progressBar = document.querySelector(".progress");
 const nextBtn = document.getElementById("nextBtn");
-const numberContainer = document.querySelector(".question-numbers");
 const rocket = document.querySelector(".rocket");
 const questionContainer = document.querySelector(".question-container");
 const resultContainer = document.querySelector(".result");
 const scoreElement = document.getElementById("score");
+const progressSegments = document.querySelectorAll(".progress-segment");
+const dark = document.getElementById("Dark-theme-btn");
+const light = document.getElementById("Light-theme-btn");
 
-for (let i = 0; i < questions.length; i++) {
-  const queNumber = document.createElement("div");
-  queNumber.className = "number";
-  queNumber.textContent = i + 1;
-  numberContainer.appendChild(queNumber);
-}
-
-function updateQuestionNumber() {
+function assignClassToNumbers() {
   const numbers = document.querySelectorAll(".number");
   numbers.forEach((number, i) => {
     number.classList.remove("active", "correct", "incorrect");
@@ -53,14 +48,19 @@ function updateQuestionNumber() {
 }
 
 function updateProgressBar() {
-  const progress = (queIndex + 1) * 10;
-  progressBar.style.width = `${progress}%`;
-  if (ans[queIndex] === questions[queIndex].correct) {
-    progressBar.style.background = "#28a745";
-  } else {
-    progressBar.style.background = "#dc3545";
-  }
-  rocket.style.left = `${progress}%`;
+  const progressPercentage = (queIndex + 1) * 10;
+
+  rocket.style.left = `${progressPercentage - 12}%`;
+
+  progressSegments.forEach((segment, index) => {
+    if (index < queIndex) {
+      if (ans[index] === questions[index].correct) {
+        segment.style.backgroundColor = "#28a745";
+      } else {
+        segment.style.backgroundColor = "#dc3545";
+      }
+    }
+  });
 }
 
 function displayQuestion() {
@@ -76,14 +76,15 @@ function displayQuestion() {
     optionsElement.appendChild(button);
   });
 
-  if (queIndex === 9) {
+  if (queIndex === questions.length - 1) {
     nextBtn.textContent = "Submit";
   } else {
     nextBtn.textContent = "Next";
   }
 
   nextBtn.disabled = ans[queIndex] === null;
-  updateQuestionNumber();
+  updateProgressBar();
+  assignClassToNumbers();
 }
 
 function selectOption(index) {
@@ -97,16 +98,16 @@ function selectOption(index) {
 }
 
 nextBtn.addEventListener("click", () => {
+  queIndex++;
+  updateProgressBar();
   if (queIndex < questions.length - 1) {
-    queIndex++;
-    updateProgressBar();
     displayQuestion();
   } else {
-    showResult();
+    calculateScore();
   }
 });
 
-function showResult() {
+function calculateScore() {
   score = ans.reduce((result, answer, index) => {
     if (answer === questions[index].correct) {
       return result + 1;
@@ -120,5 +121,16 @@ function showResult() {
   scoreElement.textContent = score;
 }
 
+dark.addEventListener("click", () => {
+  document.documentElement.style.setProperty("--background-colour", "#555555");
+});
+
+light.addEventListener("click", () => {
+  document.documentElement.style.setProperty(
+    "--background-colour",
+    "rgba(255, 255, 255)"
+  );
+});
+
 displayQuestion();
-updateQuestionNumber();
+assignClassToNumbers();
