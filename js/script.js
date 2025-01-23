@@ -10,7 +10,7 @@ const questions = [
   },
   { question: "What is 18 ÷ 2?", options: ["7", "8", "9", "10"], correct: 2 },
   { question: "What is 5 x 5?", options: ["20", "25", "30", "35"], correct: 1 },
-  { question: "What is 14 - 6?", options: ["7", "8", "9", "10"], correct: 0 },
+  { question: "What is 14 - 6?", options: ["7", "8", "9", "10"], correct: 1 },
   { question: "What is 8 + 6?", options: ["12", "13", "14", "15"], correct: 2 },
   { question: "What is 16 ÷ 4?", options: ["3", "4", "5", "6"], correct: 1 },
 ];
@@ -30,6 +30,9 @@ const scoreElement = document.getElementById("score");
 const progressSegments = document.querySelectorAll(".progress-segment");
 const dark = document.getElementById("Dark-theme-btn");
 const light = document.getElementById("Light-theme-btn");
+
+const audio = new Audio("https://www.fesliyanstudios.com/play-mp3/388");
+const audio1 = new Audio("images/jumpScar.mp3");
 
 function assignClassToNumbers() {
   const numbers = document.querySelectorAll(".number");
@@ -78,8 +81,10 @@ function displayQuestion() {
 
   if (queIndex === questions.length - 1) {
     nextBtn.textContent = "Submit";
+    assignClassToNumbers();
   } else {
     nextBtn.textContent = "Next";
+    assignClassToNumbers();
   }
 
   nextBtn.disabled = ans[queIndex] === null;
@@ -92,18 +97,23 @@ function selectOption(index) {
   options.forEach((option) => {
     option.classList.remove("selected");
   });
+  audio.play();
   options[index].classList.add("selected");
   ans[queIndex] = index;
   nextBtn.disabled = false;
 }
 
 nextBtn.addEventListener("click", () => {
-  queIndex++;
-  updateProgressBar();
+  audio.play();
   if (queIndex < questions.length - 1) {
+    queIndex++;
+    updateProgressBar();
     displayQuestion();
   } else {
+    queIndex++;
+    updateProgressBar();
     calculateScore();
+    assignClassToNumbers();
   }
 });
 
@@ -118,14 +128,20 @@ function calculateScore() {
 
   questionContainer.style.display = "none";
   resultContainer.style.display = "block";
-  scoreElement.textContent = score;
+  if (score === 10) {
+    scoreElement.textContent = `You got ${score} out of 10 questions correct! - Congratulations! You got a perfect score! 🎉`;
+  } else {
+    scoreElement.textContent = `You got ${score} out of 10 questions correct!`;
+  }
 }
 
 dark.addEventListener("click", () => {
+  audio.play();
   document.documentElement.style.setProperty("--background-colour", "#555555");
 });
 
 light.addEventListener("click", () => {
+  audio.play();
   document.documentElement.style.setProperty(
     "--background-colour",
     "rgba(255, 255, 255)"
@@ -133,4 +149,3 @@ light.addEventListener("click", () => {
 });
 
 displayQuestion();
-assignClassToNumbers();

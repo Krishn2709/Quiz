@@ -48,6 +48,7 @@ body {
 }
 
 .progress-container {
+  margin-top: 10px;
   position: relative;
   margin-bottom: 3rem;
 }
@@ -81,13 +82,12 @@ body {
 }
 
 .rocket {
-  margin-top: 10px;
-  width: 40px;
-  height: 40px;
   position: absolute;
-  top: -45px;
-  left: 0;
-  transition: left 0.5s ease;
+  top: -30px;
+  left: 0%;
+  width: 45px;
+  height: auto;
+  transition: left 0.5s ease-in-out;
 }
 
 .question-numbers {
@@ -175,7 +175,7 @@ body {
 .btn {
   margin-top: 1.5rem;
   padding: 0.8rem 1.5rem;
-  background: #3498db;
+  background: #8a969e;
   color: white;
   border: none;
   border-radius: 6px;
@@ -190,7 +190,7 @@ body {
 }
 
 .btn:hover {
-  background: #2980b9;
+  background: #686b6d;
   transform: translateY(-2px);
 }
 
