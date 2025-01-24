@@ -32,7 +32,6 @@ const dark = document.getElementById("Dark-theme-btn");
 const light = document.getElementById("Light-theme-btn");
 
 const audio = new Audio("https://www.fesliyanstudios.com/play-mp3/388");
-const audio1 = new Audio("images/jumpScar.mp3");
 
 function assignClassToNumbers() {
   const numbers = document.querySelectorAll(".number");
@@ -81,10 +80,8 @@ function displayQuestion() {
 
   if (queIndex === questions.length - 1) {
     nextBtn.textContent = "Submit";
-    assignClassToNumbers();
   } else {
     nextBtn.textContent = "Next";
-    assignClassToNumbers();
   }
 
   nextBtn.disabled = ans[queIndex] === null;
@@ -107,7 +104,6 @@ nextBtn.addEventListener("click", () => {
   audio.play();
   if (queIndex < questions.length - 1) {
     queIndex++;
-    updateProgressBar();
     displayQuestion();
   } else {
     queIndex++;
@@ -127,12 +123,51 @@ function calculateScore() {
   }, 0);
 
   questionContainer.style.display = "none";
-  resultContainer.style.display = "block";
+
+  const reviewContainer = document.createElement("div");
+  reviewContainer.className = "review-container";
+
+  const reviewTitle = document.createElement("h2");
+  reviewTitle.textContent = "Quiz Review";
+  reviewContainer.appendChild(reviewTitle);
+
+  const scoreDisplay = document.createElement("p");
   if (score === 10) {
-    scoreElement.textContent = `You got ${score} out of 10 questions correct! - Congratulations! You got a perfect score! 🎉`;
+    scoreDisplay.textContent = `You got ${score} out of 10 questions correct! - Congratulations! You got a perfect score! 🎉`;
   } else {
-    scoreElement.textContent = `You got ${score} out of 10 questions correct!`;
+    scoreDisplay.textContent = `You got ${score} out of 10 questions correct!`;
   }
+  reviewContainer.appendChild(scoreDisplay);
+
+  questions.forEach((q, index) => {
+    const questionReview = document.createElement("div");
+    questionReview.className = "question-review";
+
+    const questionText = document.createElement("p");
+    questionText.className = "question-text";
+    questionText.innerHTML = `<strong>Q${index + 1}: ${q.question}</strong>`;
+    questionReview.appendChild(questionText);
+
+    const userAnswer = document.createElement("p");
+    userAnswer.textContent = `Your Answer: ${q.options[ans[index]]}`;
+    if (ans[index] === q.correct) {
+      userAnswer.style.color = "green";
+    } else {
+      userAnswer.style.color = "red";
+    }
+    questionReview.appendChild(userAnswer);
+
+    const correctAnswer = document.createElement("p");
+    correctAnswer.textContent = `Correct Answer: ${q.options[q.correct]}`;
+    correctAnswer.style.color = "blue";
+    questionReview.appendChild(correctAnswer);
+
+    reviewContainer.appendChild(questionReview);
+  });
+
+  resultContainer.innerHTML = "";
+  resultContainer.appendChild(reviewContainer);
+  resultContainer.style.display = "block";
 }
 
 dark.addEventListener("click", () => {

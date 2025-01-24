@@ -137,7 +137,7 @@ body {
   font-size: 1.3rem;
   margin-bottom: 1.5rem;
   padding: 1rem;
-  background: #f7f9fc;
+  background: #f2f7fd;
   border-radius: 8px;
   border-left: 4px solid #3498db;
   font-weight: bold;
@@ -175,8 +175,8 @@ body {
 .btn {
   margin-top: 1.5rem;
   padding: 0.8rem 1.5rem;
-  background: #8a969e;
-  color: white;
+  background-color: #39864b; /* Green */
+  color: #ffffff; /* White text */
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -190,7 +190,7 @@ body {
 }
 
 .btn:hover {
-  background: #686b6d;
+  background-color: #218838;
   transform: translateY(-2px);
 }
 
@@ -219,6 +219,10 @@ body {
 .result p {
   font-size: 1.2rem;
   color: #34495e;
+}
+
+.question-text {
+  margin-top: 20px;
 }
 
 #score {
