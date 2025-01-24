@@ -18,6 +18,8 @@ const questions = [
 let queIndex = 0;
 let score = 0;
 let ans = new Array(questions.length).fill(null);
+let count = 11;
+let countdown;
 
 const questionsElement = document.querySelector(".question");
 const optionsElement = document.querySelector(".options");
@@ -30,6 +32,9 @@ const scoreElement = document.getElementById("score");
 const progressSegments = document.querySelectorAll(".progress-segment");
 const dark = document.getElementById("Dark-theme-btn");
 const light = document.getElementById("Light-theme-btn");
+
+const timeLeft = document.querySelector(".time-left");
+const timeDiv = document.querySelector(".timer-div");
 
 const audio = new Audio("https://www.fesliyanstudios.com/play-mp3/388");
 
@@ -52,7 +57,9 @@ function assignClassToNumbers() {
 function updateProgressBar() {
   const progressPercentage = (queIndex + 1) * 10;
 
-  rocket.style.left = `${progressPercentage - 12}%`;
+  if (queIndex < 11) {
+    rocket.style.left = `${progressPercentage - 12}%`;
+  }
 
   progressSegments.forEach((segment, index) => {
     if (index < queIndex) {
@@ -105,6 +112,9 @@ nextBtn.addEventListener("click", () => {
   if (queIndex < questions.length - 1) {
     queIndex++;
     displayQuestion();
+    count = 11;
+    timerDisplay();
+    clearInterval(countdown);
   } else {
     queIndex++;
     updateProgressBar();
@@ -113,7 +123,42 @@ nextBtn.addEventListener("click", () => {
   }
 });
 
+const timerDisplay = () => {
+  countdown = setInterval(() => {
+    count--;
+    timeLeft.innerHTML = `${count}s`;
+    if (count == 0) {
+      clearInterval(countdown);
+      displayNext();
+    }
+  }, 1000);
+};
+
+function displayNext() {
+  if (ans[queIndex] === null) {
+    ans[queIndex] = -1;
+  }
+
+  if (queIndex < questions.length - 1) {
+    queIndex++;
+    displayQuestion();
+    count = 11;
+    clearInterval(countdown);
+    updateProgressBar();
+    assignClassToNumbers();
+    timerDisplay();
+  } else {
+    queIndex++;
+    updateProgressBar();
+    calculateScore();
+    assignClassToNumbers();
+  }
+}
+
 function calculateScore() {
+  clearInterval(countdown);
+  timeDiv.style.display = "none";
+
   score = ans.reduce((result, answer, index) => {
     if (answer === questions[index].correct) {
       return result + 1;
@@ -149,7 +194,9 @@ function calculateScore() {
     questionReview.appendChild(questionText);
 
     const userAnswer = document.createElement("p");
-    userAnswer.textContent = `Your Answer: ${q.options[ans[index]]}`;
+    userAnswer.textContent = `Your Answer: ${
+      ans[index] !== -1 ? q.options[ans[index]] : "No answer"
+    }`;
     if (ans[index] === q.correct) {
       userAnswer.style.color = "green";
     } else {
@@ -184,3 +231,6 @@ light.addEventListener("click", () => {
 });
 
 displayQuestion();
+clearInterval(countdown);
+
+timerDisplay();
